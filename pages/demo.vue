@@ -1,47 +1,79 @@
 <template>
-  <div class="bg-gray-900 text-white min-h-screen flex flex-col justify-center items-center">
+  <div
+    class="bg-gray-900 text-white min-h-screen flex flex-col justify-center items-center"
+  >
     <!-- Dropdowns and Submit Section -->
     <section class="container mx-auto py-16">
       <div class="grid grid-cols-1 gap-4 text-center">
         <!-- Country Dropdown -->
-        <select v-model="selectedCountry" class="bg-gray-800 rounded-lg p-2 text-gray-300">
+        <select
+          v-model="selectedCountry"
+          class="bg-gray-800 rounded-lg p-2 text-gray-300"
+        >
           <option disabled value="">Select Country</option>
           <option>Germany</option>
         </select>
 
         <!-- Region Dropdown -->
-        <select v-model="selectedRegion" class="bg-gray-800 rounded-lg p-2 text-gray-300">
+        <select
+          v-model="selectedRegion"
+          class="bg-gray-800 rounded-lg p-2 text-gray-300"
+        >
           <option disabled value="">Select Region</option>
-          <option v-for="region in regions" :key="region">{{ region }}</option>
+          <option v-for="region in regions" :key="region">
+            {{ region }}
+          </option>
         </select>
 
         <!-- School Type Dropdown -->
-        <select v-model="selectedSchoolType" @change="updateGrades" class="bg-gray-800 rounded-lg p-2 text-gray-300">
+        <select
+          v-model="selectedSchoolType"
+          @change="updateGrades"
+          class="bg-gray-800 rounded-lg p-2 text-gray-300"
+        >
           <option disabled value="">Select School Type</option>
-          <option v-for="type in schoolTypes" :key="type">{{ type }}</option>
+          <option v-for="type in schoolTypes" :key="type">
+            {{ type }}
+          </option>
         </select>
 
         <!-- Grade Dropdown -->
-        <select v-model="selectedGrade" class="bg-gray-800 rounded-lg p-2 text-gray-300">
+        <select
+          v-model="selectedGrade"
+          class="bg-gray-800 rounded-lg p-2 text-gray-300"
+        >
           <option disabled value="">Select Grade</option>
-          <option v-for="grade in grades" :key="grade">{{ grade }}</option>
+          <option v-for="grade in grades" :key="grade">
+            {{ grade }}
+          </option>
         </select>
 
         <!-- Teaching Type Dropdown -->
-        <select v-model="selectedTeachingType" class="bg-gray-800 rounded-lg p-2 text-gray-300">
+        <select
+          v-model="selectedTeachingType"
+          class="bg-gray-800 rounded-lg p-2 text-gray-300"
+        >
           <option disabled value="">Select Teaching Type</option>
           <option>Regulär</option>
           <option>Reformpädagogisch</option>
         </select>
 
         <!-- Subject Dropdown -->
-        <select v-model="selectedSubject" class="bg-gray-800 rounded-lg p-2 text-gray-300">
+        <select
+          v-model="selectedSubject"
+          class="bg-gray-800 rounded-lg p-2 text-gray-300"
+        >
           <option disabled value="">Select Subject</option>
-          <option v-for="subject in subjects" :key="subject">{{ subject }}</option>
+          <option v-for="subject in subjects" :key="subject">
+            {{ subject }}
+          </option>
         </select>
 
         <!-- Submit Button -->
-        <button @click="submitForm" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button
+          @click="submitForm"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
           Submit
         </button>
       </div>
@@ -62,7 +94,7 @@ const selectedSubject = ref('')
 const regions = ref(['Baden-Württemberg', 'Bavaria', 'Berlin', 'Brandenburg', 'Bremen', 'Hamburg', 'Hesse', 'Lower Saxony', 'Mecklenburg-Vorpommern', 'North Rhine-Westphalia', 'Rhineland-Palatinate', 'Saarland', 'Saxony', 'Saxony-Anhalt', 'Schleswig-Holstein', 'Thuringia'])
 const schoolTypes = ref(['Grundschule', 'Gymnasium', 'Realschule', 'Hauptschule', 'Gesamtschule', 'Sonderschule'])
 const subjects = ref(['German', 'English', 'Physics', 'Religion', 'Sports', 'Math', 'History', 'Biology', 'Chemistry', 'Geography', 'Art', 'Music', 'Computer Science'])
-const grades = ref([])
+const grades = ref()
 
 const updateGrades = () => {
   switch (selectedSchoolType.value) {
