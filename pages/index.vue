@@ -1,50 +1,46 @@
 <template>
   <div
-    class="text-black pt-8 min-h-screen flex flex-col justify-center items-center relative bg-blue-900/70"
+    class="text-black container mx-auto min-h-screen flex flex-col justify-center items-center"
   >
-    <div
-      class="absolute inset-0 -z-10 bg-[url('/public/img/teachers-room-bg.jpg')] bg-cover bg-center"
-    ></div>
-    <!-- <div class="absolute inset-0 -z-10 bg-blue-500/50"></div> -->
     <!-- Header Section -->
-    <header class="text-center">
+    <header class="text-center text-white">
       <h1 class="text-4xl font-bold mb-4">Hands on problem understanding</h1>
       <p class="text-lg mb-8">Revolutionizing Education with AI</p>
       <!-- <a href="#features" class="text-blue-500 hover:underline">Learn More</a> -->
     </header>
 
     <!-- Features Section -->
-    <section id="features" class="py-16">
-      <div class="container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-8">Use Cases</h2>
+    <section id="features" class="py-16 w-full">
+      <div class="w-full mx-auto text-center">
+        <h2 class="text-5xl font-bold mb-8 text-white">Use Cases</h2>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="flex flex-col w-full gap-8 px-24">
           <!-- Feature 1 -->
-          <div class="p-6 bg-gray-800 rounded-lg">
+          <div class="p-6 bg-white rounded-lg max-w-[400px] self-start">
             <i
               class="text-4xl text-blue-500 mb-4 fas fa-chalkboard-teacher"
             ></i>
             <h3 class="text-xl font-semibold mb-2">Smart Scheduling</h3>
-            <p class="text-gray-300">
+            <p class="">
               Create optimized teacher schedules based on educational sciences
               context.
             </p>
           </div>
 
           <!-- Feature 2 -->
-          <div class="p-6 bg-gray-800 rounded-lg">
+          <div class="p-6 bg-white rounded-lg max-w-[400px] self-center">
             <i class="text-4xl text-blue-500 mb-4 fas fa-rocket"></i>
             <h3 class="text-xl font-semibold mb-2">AI-Powered Efficiency</h3>
-            <p class="text-gray-300">
+            <p class="">
               Boost efficiency and productivity with our AI-driven tools.
             </p>
           </div>
 
           <!-- Feature 3 -->
-          <div class="p-6 bg-gray-800 rounded-lg">
+          <div class="p-6 bg-white rounded-lg max-w-[400px] self-end">
             <i class="text-4xl text-blue-500 mb-4 fas fa-lightbulb"></i>
             <h3 class="text-xl font-semibold mb-2">Innovative Solutions</h3>
-            <p class="text-gray-300">
+            <p class="">
               Bring innovative solutions to the field of education.
             </p>
           </div>
@@ -52,17 +48,22 @@
       </div>
     </section>
 
+    <!-- <div class="w-screen h-4 bg-white my-24 overflow-hidden"></div> -->
+
     <!-- CTA Section -->
-    <section class="bg-blue-500 py-16 text-center">
+    <section class="bg-blue-800 py-16 text-center p-6 rounded-md">
       <h2 class="text-3xl font-bold text-white mb-4">Ready to Get Started?</h2>
       <p class="text-lg text-white mb-8">
         Join us in shaping the future of education!
       </p>
-      <nuxt-link
-        to="demo"
-        class="bg-white text-blue-500 hover:bg-blue-700 text-lg font-semibold py-2 px-6 rounded-full"
-        >Try for free</nuxt-link
+      <NuxtLink
+        to="/demo"
+        exact
+        class="border-2 bg-white border-black hover:bg-blue-500 hover:text-white px-6 py-2 rounded-full font-bold"
+        active-class="bg-gray-900 text-white"
       >
+        Try for free
+      </NuxtLink>
     </section>
 
     <!-- Contact Section -->
