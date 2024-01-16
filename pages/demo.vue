@@ -69,6 +69,12 @@
           </option>
         </select>
 
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Upload Stundenplan
+        </button>
+
         <!-- Submit Button -->
         <button
           @click="submitForm"
@@ -82,38 +88,76 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import axios from 'axios'
+import { ref } from 'vue';
+import axios from 'axios';
 
-const selectedCountry = ref('')
-const selectedRegion = ref('')
-const selectedSchoolType = ref('')
-const selectedGrade = ref('')
-const selectedTeachingType = ref('')
-const selectedSubject = ref('')
-const regions = ref(['Baden-Württemberg', 'Bavaria', 'Berlin', 'Brandenburg', 'Bremen', 'Hamburg', 'Hesse', 'Lower Saxony', 'Mecklenburg-Vorpommern', 'North Rhine-Westphalia', 'Rhineland-Palatinate', 'Saarland', 'Saxony', 'Saxony-Anhalt', 'Schleswig-Holstein', 'Thuringia'])
-const schoolTypes = ref(['Grundschule', 'Gymnasium', 'Realschule', 'Hauptschule', 'Gesamtschule', 'Sonderschule'])
-const subjects = ref(['German', 'English', 'Physics', 'Religion', 'Sports', 'Math', 'History', 'Biology', 'Chemistry', 'Geography', 'Art', 'Music', 'Computer Science'])
-const grades = ref()
+const selectedCountry = ref('');
+const selectedRegion = ref('');
+const selectedSchoolType = ref('');
+const selectedGrade = ref('');
+const selectedTeachingType = ref('');
+const selectedSubject = ref('');
+const regions = ref([
+  'Baden-Württemberg',
+  'Bavaria',
+  'Berlin',
+  'Brandenburg',
+  'Bremen',
+  'Hamburg',
+  'Hesse',
+  'Lower Saxony',
+  'Mecklenburg-Vorpommern',
+  'North Rhine-Westphalia',
+  'Rhineland-Palatinate',
+  'Saarland',
+  'Saxony',
+  'Saxony-Anhalt',
+  'Schleswig-Holstein',
+  'Thuringia',
+]);
+const schoolTypes = ref([
+  'Grundschule',
+  'Gymnasium',
+  'Realschule',
+  'Hauptschule',
+  'Gesamtschule',
+  'Sonderschule',
+]);
+const subjects = ref([
+  'German',
+  'English',
+  'Physics',
+  'Religion',
+  'Sports',
+  'Math',
+  'History',
+  'Biology',
+  'Chemistry',
+  'Geography',
+  'Art',
+  'Music',
+  'Computer Science',
+]);
+const grades = ref();
 
 const updateGrades = () => {
   switch (selectedSchoolType.value) {
     case 'Grundschule':
-      grades.value = Array.from({ length: 4 }, (_, i) => i + 1)
-      break
+      grades.value = Array.from({ length: 4 }, (_, i) => i + 1);
+      break;
     case 'Hauptschule':
     case 'Realschule':
     case 'Sonderschule':
-      grades.value = Array.from({ length: 6 }, (_, i) => i + 5)
-      break
+      grades.value = Array.from({ length: 6 }, (_, i) => i + 5);
+      break;
     case 'Gymnasium':
     case 'Gesamtschule':
-      grades.value = Array.from({ length: 9 }, (_, i) => i + 5)
-      break
+      grades.value = Array.from({ length: 9 }, (_, i) => i + 5);
+      break;
     default:
-      grades.value = []
+      grades.value = [];
   }
-}
+};
 
 const submitForm = async () => {
   const formData = {
@@ -122,17 +166,17 @@ const submitForm = async () => {
     schoolType: selectedSchoolType.value,
     grade: selectedGrade.value,
     teachingType: selectedTeachingType.value,
-    subject: selectedSubject.value
-  }
+    subject: selectedSubject.value,
+  };
   try {
-    const response = await axios.post('your-api-endpoint', formData)
-    console.log(response.data)
+    const response = await axios.post('your-api-endpoint', formData);
+    console.log(response.data);
     // Handle response
   } catch (error) {
-    console.error(error)
+    console.error(error);
     // Handle error
   }
-}
+};
 </script>
 
 <style scoped>
