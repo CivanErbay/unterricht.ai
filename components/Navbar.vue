@@ -4,7 +4,11 @@
       <div class="flex justify-between h-24">
         <!-- Logo -->
         <div class="flex-shrink-0 flex items-center">
-          <img class="h-full w-auto" src="/public/img/logo.png" alt="Logo" />
+          <img
+            class="h-full w-auto"
+            src="/public/img/logo.png"
+            alt="Logo"
+          />
         </div>
 
         <!-- Navbar links -->
@@ -40,7 +44,15 @@
               class="border-2 border-black hover:bg-blue-500 hover:text-white px-6 py-2 rounded-full font-bold"
               active-class="bg-gray-900 text-white"
             >
-              Try for free
+              UNTERRICHTSSTUNDEN-GENERATOR
+            </NuxtLink>
+            <NuxtLink
+              to="/context"
+              exact
+              class="border-2 border-black hover:bg-blue-500 hover:text-white px-6 py-2 rounded-full font-bold"
+              active-class="bg-gray-900 text-white"
+            >
+              KONTEXT-UPLOAD
             </NuxtLink>
           </div>
         </div>
