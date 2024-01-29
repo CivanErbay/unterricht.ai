@@ -20,10 +20,48 @@
           {{ currentPage.desc }}
 
           <Dropdown
+            v-if="currentPageIndex !== pages.length - 2"
             :options="currentPage.items"
             :placeholder="currentPage.placeholder"
             @select="handleSelect"
           ></Dropdown>
+
+          <div v-if="currentPageIndex == pages.length - 2">
+            <ul
+              class="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400 mt-6"
+            >
+              <li
+                v-for="topic in selectedValues.topics"
+                :key="topic"
+                class="flex items-center"
+              >
+                <svg
+                  class="w-3.5 h-3.5 me-2 text-green-500 dark:text-green-400 flex-shrink-0"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                  />
+                </svg>
+                {{ topic }}
+              </li>
+            </ul>
+
+            <input
+              class="mt-8 block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              v-model="currentTopic"
+            />
+            <button
+              class="border-2 bg-white text-black border-black hover:bg-blue-500 hover:text-white px-6 py-2 rounded-full font-bold mt-6"
+              @click="addTopic"
+            >
+              Hinzufügen
+            </button>
+          </div>
         </div>
         <div v-else class="results-container">
           <div
@@ -31,10 +69,26 @@
             :key="key"
             class="result-item"
           >
-            <h3 class="result-title">
-              {{ capitalizeFirstLetter(key) }}
-            </h3>
-            <p class="result-value">{{ value.text }}</p>
+            <div v-if="key !== 'topics'">
+              <h3 class="result-title">
+                {{ capitalizeFirstLetter(key) }}
+              </h3>
+              <p class="result-value">{{ value.text }}</p>
+            </div>
+            <div v-else>
+              <h3 class="result-title">
+                {{ capitalizeFirstLetter(key) }}
+              </h3>
+              <ul>
+                <li
+                  v-for="topic in value"
+                  :key="topic"
+                  class="result-value"
+                >
+                  {{ topic }}
+                </li>
+              </ul>
+            </div>
           </div>
 
           <button
@@ -49,7 +103,7 @@
     <button
       v-if="currentPageIndex !== pages.length - 1"
       @click="navigateToNextPage"
-      class="border-2 bg-white border-black text-black hover:bg-blue-500 hover:text-white px-6 py-2 rounded-full font-bold mt-3 disabled:opacity-50 disabled:bg-gray-400 disabled:border-gray-400 disabled:text-gray-700 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
+      class="border-2 bg-white border-black text-black hover:bg-blue-500 hover:text-white px-6 py-2 rounded-full font-bold mt-8 disabled:opacity-50 disabled:bg-gray-400 disabled:border-gray-400 disabled:text-gray-700 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
       :disabled="!isValueSelected"
     >
       Weiter
@@ -61,18 +115,20 @@
 import { ref, computed } from 'vue';
 
 const currentPageIndex = ref(0);
+const currentTopic = ref('');
 const selectedValues = ref({
-  bundesland: '',
-  schulform: '',
-  klasse: '',
-  schulfach: ''
+  country: '',
+  schooltype: '',
+  class: '',
+  subject: '',
+  topics: [],
+  contextPdfs: []
 });
-
 
 const pages = [
   {
     title: 'Bundesland',
-    input: 'bundesland',
+    input: 'country',
     desc: 'Bitte geben Sie an, wo sich Ihre Einrichtung befindet, damit wir die geltenden Rechtsvorschriften bewerten können.',
     items: [
           { text: 'Baden-Württemberg', value: 1 },
@@ -96,7 +152,7 @@ const pages = [
   },
   {
     title: 'Schulform',
-    input: 'schulform',
+    input: 'schooltype',
     desc: 'Bitte wähle eine Schulform',
       items: [
           { text: 'Gymnasium', value: 1 },
@@ -109,7 +165,7 @@ const pages = [
   },
     {
     title: 'Klasse',
-    input: 'klasse',
+    input: 'class',
     desc: 'Bitte wähle die Klassenstufe',
       items: [
           { text: '1', value: 1 },
@@ -131,7 +187,7 @@ const pages = [
   },
   {
     title: 'Schulfach',
-    input: 'schulfach',
+    input: 'subject',
     desc: 'Bitte wähle ein Schulfach',
     items: [
         { text: 'Biologie', value: 1 },
@@ -151,27 +207,39 @@ const pages = [
         { text: 'Religion/Ethik', value: 15 }
     ],
         placeholder: "Auswählen"
+  }, {
+    title: 'Themen',
+    input: 'themen',
+
+        placeholder: "Auswählen"
   },
   {
     title: 'Übersicht',
   }
 ];
 
+const isTopicListValid = computed(() => selectedValues.value.topics.length > 0);
+
+
 const isValueSelected = computed(() => {
   const inputType = currentPage.value.input;
+  if (inputType === 'themen') {
+    return isTopicListValid.value;
+  }
   return selectedValues.value[inputType] && selectedValues.value[inputType].text !== '';
 });
 
 const fetchHandler = async () => {
   const uploadUrl = 'https://unterricht-ai-backend.onrender.com/api/ai/prompt';
 
+  const query = {query: selectedValues.value}
   try {
     const response = await fetch(uploadUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(selectedValues.value),
+      body: JSON.stringify(query),
     });
 
     if (!response.ok) {
@@ -193,6 +261,13 @@ const navigateToNextPage = () => {
     currentPageIndex.value += 1;
   } else {
     console.log('Form Submitted!');
+  }
+};
+
+const addTopic = () => {
+  if (currentTopic.value) {
+    selectedValues.value.topics.push(currentTopic.value);
+    currentTopic.value = '';
   }
 };
 

@@ -3,6 +3,12 @@
     <h2 class="text-5xl font-bold mb-8 text-white my-8">
       Context Upload
     </h2>
+    <label class="w-fit text-2xl text-white">Beschreibung</label>
+    <input
+      class="my-8 block w-1/2 p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      type="textarea"
+      v-model="description"
+    />
     <label
       class="w-1/2 flex flex-col justify-center items-center h-32 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer hover:bg-gray-100"
     >
@@ -34,9 +40,7 @@
           <span class="font-semibold">File selected:</span>
           {{ file?.name }}
         </p>
-        <p class="text-xs text-gray-500">
-          SVG, PNG, JPG or GIF (MAX. 800x800px)
-        </p>
+        <p class="text-xs text-gray-500">PDF or DOCX (MAX. 5MB)</p>
       </div>
       <input
         id="file-upload"
@@ -58,6 +62,7 @@
 import { ref } from 'vue';
 
 const file = ref({ value: null });
+const description = ref('');
 const isSelected = ref(false)
 const uploadUrl = 'https://unterricht-ai-backend.onrender.com/api/files/upload';
 
@@ -77,9 +82,17 @@ const uploadFile = async () => {
     return;
   }
 
+  const fileNameWithoutExtension = file.value.name.replace(/\.[^/.]+$/, "");
+
   const formData = new FormData();
   formData.append('file', file.value);
   formData.append('filename', file.value.name);
+  formData.append('title', fileNameWithoutExtension);
+  formData.append('description', description.value);
+
+   for (let [key, value] of formData.entries()) {
+    console.log(`${key}: ${value}`);
+  }
 
   try {
     const response = await fetch(uploadUrl, {
