@@ -1,9 +1,7 @@
-import type { AuthError } from '@supabase/supabase-js'; import type {
-AuthError } from '@supabase/supabase-js';
 <template>
   <div class="my-dropdown">
     <div class="selected" @click="toggle">
-      {{ selected === null ? placeholder : selected.text}}
+      {{ selected === null ? placeholder : selected.text }}
     </div>
     <div class="options" v-show="isOpen">
       <div
@@ -26,11 +24,11 @@ import { defineProps, defineEmits } from 'vue';
 const props = defineProps({
   options: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   placeholder: {
     type: String,
-  }
+  },
 });
 
 const emits = defineEmits(['select']);
@@ -50,9 +48,13 @@ const set = (option) => {
 </script>
 
 <style scoped>
-
-* { box-sizing: border-box; }
-body { font-size: 62.5%; background: #71abc8; }
+* {
+  box-sizing: border-box;
+}
+body {
+  font-size: 62.5%;
+  background: #71abc8;
+}
 
 .my-dropdown {
   cursor: pointer;
@@ -105,6 +107,8 @@ body { font-size: 62.5%; background: #71abc8; }
   border: 0px solid #fff;
   color: #636363;
   transform: translate(24%, 0);
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .option {
@@ -121,13 +125,15 @@ body { font-size: 62.5%; background: #71abc8; }
   border-bottom: none;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: all .25s ease-out;
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.25s ease-out;
 }
 
-.fade-enter, .fade-leave-active {
+.fade-enter,
+.fade-leave-active {
   opacity: 0;
-	transform: translateY(-30px);
+  transform: translateY(-30px);
 }
 
 .fas.fa-angle-down {

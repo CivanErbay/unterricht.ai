@@ -1,10 +1,6 @@
 <template>
-  <div
-    class="container mx-auto flex flex-col items-center h-full text-white"
-  >
-    <h2 class="text-5xl font-bold mb-8  my-8">
-      Unterrichtsstunde generieren
-    </h2>
+  <div class="container mx-auto flex flex-col items-center h-full text-white">
+    <h2 class="text-5xl font-bold mb-8 my-8">Unterrichtsstunde generieren</h2>
     <transition name="fade" mode="out-in">
       <div
         :key="currentPageIndex"
@@ -80,11 +76,7 @@
                 {{ capitalizeFirstLetter(key) }}
               </h3>
               <ul>
-                <li
-                  v-for="topic in value"
-                  :key="topic"
-                  class="result-value"
-                >
+                <li v-for="topic in value" :key="topic" class="result-value">
                   {{ topic }}
                 </li>
               </ul>
@@ -112,8 +104,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-
 const currentPageIndex = ref(0);
 const currentTopic = ref('');
 const selectedValues = ref({
@@ -122,7 +112,7 @@ const selectedValues = ref({
   class: '',
   subject: '',
   topics: [],
-  contextPdfs: []
+  contextPdfs: [],
 });
 
 const pages = [
@@ -131,108 +121,109 @@ const pages = [
     input: 'country',
     desc: 'Bitte geben Sie an, wo sich Ihre Einrichtung befindet, damit wir die geltenden Rechtsvorschriften bewerten können.',
     items: [
-          { text: 'Baden-Württemberg', value: 1 },
-          { text: 'Bayern', value: 2 },
-          { text: 'Berlin', value: 3 },
-          { text: 'Brandenburg', value: 4 },
-          { text: 'Bremen', value: 5 },
-          { text: 'Hamburg', value: 6 },
-          { text: 'Hessen', value: 7 },
-          { text: 'Niedersachsen', value: 8 },
-          { text: 'Mecklenburg-Vorpommern', value: 9 },
-          { text: 'Nordrhein-Westfalen', value: 10 },
-          { text: 'Rheinland-Pfalz', value: 11 },
-          { text: 'Saarland', value: 12 },
-          { text: 'Sachsen', value: 13 },
-          { text: 'Sachsen-Anhalt', value: 14 },
-          { text: 'Schleswig-Holstein', value: 15 },
-          { text: 'Thüringen', value: 16 }
-          ],
-    placeholder: "Auswählen"
+      { text: 'Baden-Württemberg', value: 1 },
+      { text: 'Bayern', value: 2 },
+      { text: 'Berlin', value: 3 },
+      { text: 'Brandenburg', value: 4 },
+      { text: 'Bremen', value: 5 },
+      { text: 'Hamburg', value: 6 },
+      { text: 'Hessen', value: 7 },
+      { text: 'Niedersachsen', value: 8 },
+      { text: 'Mecklenburg-Vorpommern', value: 9 },
+      { text: 'Nordrhein-Westfalen', value: 10 },
+      { text: 'Rheinland-Pfalz', value: 11 },
+      { text: 'Saarland', value: 12 },
+      { text: 'Sachsen', value: 13 },
+      { text: 'Sachsen-Anhalt', value: 14 },
+      { text: 'Schleswig-Holstein', value: 15 },
+      { text: 'Thüringen', value: 16 },
+    ],
+    placeholder: 'Auswählen',
   },
   {
     title: 'Schulform',
     input: 'schooltype',
     desc: 'Bitte wähle eine Schulform',
-      items: [
-          { text: 'Gymnasium', value: 1 },
-          { text: 'Realschule', value: 2 },
-          { text: 'Hauptschule', value: 3 },
-          { text: 'Grundschule', value: 4 },
-          { text: 'Förderschule', value: 5 },
-          ],
-        placeholder: "Auswählen"
+    items: [
+      { text: 'Gymnasium', value: 1 },
+      { text: 'Realschule', value: 2 },
+      { text: 'Hauptschule', value: 3 },
+      { text: 'Grundschule', value: 4 },
+      { text: 'Förderschule', value: 5 },
+    ],
+    placeholder: 'Auswählen',
   },
-    {
+  {
     title: 'Klasse',
     input: 'class',
     desc: 'Bitte wähle die Klassenstufe',
-      items: [
-          { text: '1', value: 1 },
-          { text: '2', value: 2 },
-          { text: '3', value: 3 },
-          { text: '4', value: 4 },
-          { text: '5', value: 5 },
-          { text: '6', value: 6 },
-          { text: '7', value: 7 },
-          { text: '8', value: 8 },
-          { text: '9', value: 9 },
-          { text: '10', value: 10 },
-          { text: '11', value: 11 },
-          { text: '12', value: 12 },
-          { text: '13', value: 13 },
-
-          ],
-    placeholder: "Auswählen"
+    items: [
+      { text: '1', value: 1 },
+      { text: '2', value: 2 },
+      { text: '3', value: 3 },
+      { text: '4', value: 4 },
+      { text: '5', value: 5 },
+      { text: '6', value: 6 },
+      { text: '7', value: 7 },
+      { text: '8', value: 8 },
+      { text: '9', value: 9 },
+      { text: '10', value: 10 },
+      { text: '11', value: 11 },
+      { text: '12', value: 12 },
+      { text: '13', value: 13 },
+    ],
+    placeholder: 'Auswählen',
   },
   {
     title: 'Schulfach',
     input: 'subject',
     desc: 'Bitte wähle ein Schulfach',
     items: [
-        { text: 'Biologie', value: 1 },
-        { text: 'Deutsch', value: 2 },
-        { text: 'Mathematik', value: 3 },
-        { text: 'Physik', value: 4 },
-        { text: 'Chemie', value: 5 },
-        { text: 'Geschichte', value: 6 },
-        { text: 'Geografie', value: 7 },
-        { text: 'Sozialkunde', value: 8 },
-        { text: 'Englisch', value: 9 },
-        { text: 'Französisch', value: 10 },
-        { text: 'Kunst', value: 11 },
-        { text: 'Musik', value: 12 },
-        { text: 'Sport', value: 13 },
-        { text: 'Informatik', value: 14 },
-        { text: 'Religion/Ethik', value: 15 }
+      { text: 'Biologie', value: 1 },
+      { text: 'Deutsch', value: 2 },
+      { text: 'Mathematik', value: 3 },
+      { text: 'Physik', value: 4 },
+      { text: 'Chemie', value: 5 },
+      { text: 'Geschichte', value: 6 },
+      { text: 'Geografie', value: 7 },
+      { text: 'Sozialkunde', value: 8 },
+      { text: 'Englisch', value: 9 },
+      { text: 'Französisch', value: 10 },
+      { text: 'Kunst', value: 11 },
+      { text: 'Musik', value: 12 },
+      { text: 'Sport', value: 13 },
+      { text: 'Informatik', value: 14 },
+      { text: 'Religion/Ethik', value: 15 },
     ],
-        placeholder: "Auswählen"
-  }, {
+    placeholder: 'Auswählen',
+  },
+  {
     title: 'Themen',
     input: 'themen',
-
-        placeholder: "Auswählen"
+    placeholder: 'Auswählen',
   },
   {
     title: 'Übersicht',
-  }
+  },
 ];
 
 const isTopicListValid = computed(() => selectedValues.value.topics.length > 0);
-
 
 const isValueSelected = computed(() => {
   const inputType = currentPage.value.input;
   if (inputType === 'themen') {
     return isTopicListValid.value;
   }
-  return selectedValues.value[inputType] && selectedValues.value[inputType].text !== '';
+  return (
+    selectedValues.value[inputType] &&
+    selectedValues.value[inputType].text !== ''
+  );
 });
 
 const fetchHandler = async () => {
   const uploadUrl = 'https://unterricht-ai-backend.onrender.com/api/ai/prompt';
 
-  const query = {query: selectedValues.value}
+  const query = { query: selectedValues.value };
   try {
     const response = await fetch(uploadUrl, {
       method: 'POST',
@@ -277,7 +268,7 @@ const handleSelect = (value) => {
 };
 
 function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 </script>
 
